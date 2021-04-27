@@ -26,8 +26,8 @@ Por favor, sientete libre de implementar los patrones adecuados para poder integ
 
 > **Tips:**
 > - Se recomienda utilizar programación reactiva.
-> - Se recomienda utilizar patrones de diseño para la integración con el API externa
-Utilice las librerias que sean necesarias para la integración, sin embargo deberá justificar el uso de las librerias
+> - Se recomienda utilizar patrones de diseño para la integración con el API externa.
+> - Utilice las librerias que sean necesarias para la integración, sin embargo, deberá justificar el uso de las librerias.
 
 ### 2. Data Storage
 
