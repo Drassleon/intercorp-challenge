@@ -61,11 +61,14 @@ public class OrderController {
     public void createOrder(@Valid @RequestBody CreateOrderRequest request) throws EntityNotFoundException {
         log.info("Getting user data for id: {}", request.getUserId());
         var user = Optional.ofNullable(this.userService.findUserById(request.getUserId()).block()).orElseThrow(() -> new EntityNotFoundException(User.class, request.getUserId()));
+
         var orderId = UUID.randomUUID().toString();
+
+        log.info("Searching for requested products");
         List<Product> products = request.getProductListRequest()
                 .stream()
                 .map(createProductRequest -> {
-                    Product product = this.productService.getBySkuId(createProductRequest.getSku());
+                    var product = this.productService.getBySkuId(createProductRequest.getSku());
                     if (product == null) {
                         return null;
                     }
@@ -75,7 +78,7 @@ public class OrderController {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         if (products.isEmpty() || products.size() < request.getProductListRequest().size()) {
-            log.error("Could not find products for these SKUs {}", request.getProductListRequest().toString());
+            log.error("Could not find some or all products for these SKUs {}", request.getProductListRequest().toString());
             throw new EntityNotFoundException(Product.class, request.getProductListRequest().toString());
         }
         log.info("Saving order items");
@@ -92,6 +95,7 @@ public class OrderController {
         asyncDiscounts.subscribe(discounts -> log.info("Finished calculating discounts with value of {}", discounts));
         asyncTaxes.subscribe(taxes -> log.info("Finished calculating taxes with value of {}", taxes));
 
+        log.info("Persisting order data to database");
         this.orderService.save(Order.builder()
                 .id(orderId)
                 .createdDate(LocalDateTime.now())
