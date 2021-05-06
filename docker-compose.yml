@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  database:
+    image: mysql
+    restart: "no"
+    environment:
+      MYSQL_DATABASE: 'db_retail'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  cache:
+    image: redis
+    restart: "no"
+    ports:
+      - '6379:6379'
+    expose:
+      - '6379'
