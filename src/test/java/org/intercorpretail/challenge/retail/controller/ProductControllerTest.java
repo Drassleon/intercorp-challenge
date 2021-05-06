@@ -2,6 +2,7 @@ package org.intercorpretail.challenge.retail.controller;
 
 import org.intercorpretail.challenge.retail.business.domain.Product;
 import org.intercorpretail.challenge.retail.business.output.ProductService;
+import org.intercorpretail.challenge.utils.exception.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class ProductControllerTest {
     }
 
     @Test
-    void testGetProductBySkuId_GivenValidInputs_ShouldReturnSingleProduct() {
+    void testGetProductBySkuId_GivenValidInputs_ShouldReturnSingleProduct() throws EntityNotFoundException {
 
         String skuId = "skuId";
 
